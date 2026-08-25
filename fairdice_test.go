@@ -66,7 +66,7 @@ func TestDiceRoughlyUniform(t *testing.T) {
 	counts := [7]int{}
 	const rolls = 6000
 	var rb Response
-	for i := 0; i < rolls; i++ {
+	for i := range rolls {
 		// Deterministic RB sequence so the test can't flake on rand.
 		rb = sha256.Sum256(append(rb[:], byte(i)))
 		d1, d2 := Dice(reveal, rb)
@@ -87,7 +87,7 @@ func TestOpeningNeverEqual(t *testing.T) {
 		t.Fatal(err)
 	}
 	var rb Response
-	for i := 0; i < 2000; i++ {
+	for i := range 2000 {
 		rb = sha256.Sum256(append(rb[:], byte(i)))
 		a, b := Opening(reveal, rb)
 		if a == b {
